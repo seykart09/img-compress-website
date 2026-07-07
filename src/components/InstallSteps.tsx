@@ -1,7 +1,19 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { platforms, type Platform } from '../data'
 
-type Editor = 'cursor' | 'vscode'
+type Editor = 'cursor' | 'vscode' | 'antigravity'
+
+const EDITOR_LABEL: Record<Editor, string> = {
+  cursor: 'Cursor',
+  vscode: 'VS Code',
+  antigravity: 'Antigravity',
+}
+
+const EDITOR_BIN: Record<Editor, string> = {
+  cursor: 'cursor',
+  vscode: 'code',
+  antigravity: 'antigravity',
+}
 
 const RELOAD_HINT = 'Cmd/Ctrl + Shift + P → "Developer: Reload Window"'
 
@@ -16,8 +28,7 @@ function detectPlatformId(): string {
 }
 
 function editorCli(editor: Editor, file: string) {
-  const bin = editor === 'cursor' ? 'cursor' : 'code'
-  return `${bin} --install-extension ${file}`
+  return `${EDITOR_BIN[editor]} --install-extension ${file}`
 }
 
 export function InstallSteps() {
@@ -41,7 +52,7 @@ export function InstallSteps() {
       style={{ borderColor: 'var(--line)', background: 'var(--surface)', boxShadow: 'var(--shadow-card)' }}
     >
       <div className="flex border-b" style={{ borderColor: 'var(--line)' }}>
-        {(['cursor', 'vscode'] as Editor[]).map((e) => (
+        {(['cursor', 'vscode', 'antigravity'] as Editor[]).map((e) => (
           <button
             key={e}
             onClick={() => setEditor(e)}
@@ -53,7 +64,7 @@ export function InstallSteps() {
               marginBottom: '-1px',
             }}
           >
-            {e === 'cursor' ? 'Cursor' : 'VS Code'}
+            {EDITOR_LABEL[e]}
           </button>
         ))}
       </div>

@@ -97,7 +97,7 @@ function App() {
                   className="w-fit rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-wide sm:text-[11.5px]"
                   style={{ borderColor: 'var(--line)', color: 'var(--muted)' }}
                 >
-                  {RELEASE_TAG} · VS Code &amp; Cursor
+                  {RELEASE_TAG} · VS Code, Cursor &amp; Antigravity
                 </span>
               </div>
               <h1
@@ -182,7 +182,7 @@ function App() {
               <SectionHeading
                 eyebrow="Setup"
                 title="Install in under a minute"
-                description="Works the same way in Cursor and VS Code — both read the standard .vsix format."
+                description="Works the same way in Cursor, VS Code, and Antigravity — all three read the standard .vsix format."
               />
               <InstallSteps />
             </section>
