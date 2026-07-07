@@ -1,4 +1,4 @@
-export const RELEASE_TAG = 'v0.0.1'
+export const RELEASE_TAG = 'v0.0.2'
 export const REPO_URL = 'https://github.com/seykart09/ux-img-compress'
 const RELEASE_BASE = `${REPO_URL}/releases/download/${RELEASE_TAG}`
 
@@ -15,19 +15,19 @@ export const platforms: Platform[] = [
     id: 'darwin-arm64',
     os: 'macOS',
     arch: 'Apple Silicon (M1–M4)',
-    file: 'ux-img-compress-0.0.1-darwin-arm64.vsix',
+    file: 'ux-img-compress-darwin-arm64-0.0.2.vsix',
   },
   {
     id: 'darwin-x64',
     os: 'macOS',
     arch: 'Intel',
-    file: 'ux-img-compress-0.0.1-darwin-x64.vsix',
+    file: 'ux-img-compress-darwin-x64-0.0.2.vsix',
   },
   {
     id: 'win32-x64',
     os: 'Windows',
     arch: '64-bit',
-    file: 'ux-img-compress-0.0.1-win32-x64.vsix',
+    file: 'ux-img-compress-win32-x64-0.0.2.vsix',
   },
 ]
 
