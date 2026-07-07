@@ -1,16 +1,39 @@
-import { useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { platforms, type Platform } from '../data'
 
 type Editor = 'cursor' | 'vscode'
 
-const CLI: Record<Editor, string> = {
-  cursor: 'cursor --install-extension ux-img-compress-0.0.1-<platform>.vsix',
-  vscode: 'code --install-extension ux-img-compress-0.0.1-<platform>.vsix',
+const RELOAD_HINT = 'Cmd/Ctrl + Shift + P → "Developer: Reload Window"'
+
+function detectPlatformId(): string {
+  const ua = navigator.userAgent
+
+  // Browsers don't expose CPU architecture, so macOS defaults to Apple Silicon
+  // (the more common case today) — the platform picker lets users correct this.
+  if (/Mac/i.test(ua)) return 'darwin-arm64'
+  if (/Win/i.test(ua)) return 'win32-x64'
+  return platforms[0].id
 }
 
-const RELOAD_HINT = 'Cmd/Ctrl + Shift + P → "Developer: Reload Window"'
+function editorCli(editor: Editor, file: string) {
+  const bin = editor === 'cursor' ? 'cursor' : 'code'
+  return `${bin} --install-extension ${file}`
+}
 
 export function InstallSteps() {
   const [editor, setEditor] = useState<Editor>('cursor')
+  const [platformId, setPlatformId] = useState<string>(platforms[0].id)
+
+  useEffect(() => {
+    setPlatformId(detectPlatformId())
+  }, [])
+
+  const platform: Platform = useMemo(
+    () => platforms.find((p) => p.id === platformId) ?? platforms[0],
+    [platformId],
+  )
+
+  const command = editorCli(editor, platform.file)
 
   return (
     <div
@@ -36,13 +59,31 @@ export function InstallSteps() {
       </div>
 
       <ol className="flex flex-col gap-5 p-4 sm:p-6">
-        <Step n={1} title="Download the build for your platform">
-          Grab the <code className="mono-inline">.vsix</code> that matches your OS from the downloads above.
+        <Step n={1} title="Choose your platform">
+          <div className="flex flex-wrap gap-2">
+            {platforms.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => setPlatformId(p.id)}
+                className="rounded-md border px-3 py-1.5 text-[13px] font-medium transition-colors"
+                style={{
+                  borderColor: platformId === p.id ? 'var(--accent)' : 'var(--line)',
+                  color: platformId === p.id ? 'var(--ink)' : 'var(--muted)',
+                  background: platformId === p.id ? 'var(--accent-soft)' : 'transparent',
+                }}
+              >
+                {p.os} <span style={{ opacity: 0.7 }}>({p.arch})</span>
+              </button>
+            ))}
+          </div>
         </Step>
 
-        <Step n={2} title="Install it">
-          <p className="mb-2">Open a terminal and run:</p>
-          <CodeBlock text={CLI[editor]} />
+        <Step n={2} title="Download, then install with one command">
+          <p className="mb-2">
+            Grab <code className="mono-inline">{platform.file}</code> from the downloads above, then run this in the
+            same folder:
+          </p>
+          <CodeBlock text={command} />
           <p className="mt-2 text-[13.5px]" style={{ color: 'var(--muted)' }}>
             No terminal? Open the Extensions panel (Cmd/Ctrl+Shift+X),
             click the <strong>···</strong> menu at the top, and choose <strong>Install from VSIX…</strong>
