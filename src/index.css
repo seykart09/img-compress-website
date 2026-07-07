@@ -1,0 +1,172 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Fraunces';
+  src: url('./assets/fonts/Fraunces-Variable.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  src: url('./assets/fonts/Fraunces-Italic.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('./assets/fonts/Archivo-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('./assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('./assets/fonts/JetBrainsMono-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #f7f5f1;
+  --surface: #ffffff;
+  --ink: #1c1e21;
+  --ink-soft: #38363f;
+  --muted: #6b675f;
+  --line: #ddd8cf;
+  --line-strong: #c7c1b6;
+  --accent: #c8401f;
+  --accent-ink: #ffffff;
+  --accent-soft: #f2e2dc;
+  --good: #3f7a52;
+
+  --display: 'Fraunces', ui-serif, Georgia, serif;
+  --body: 'Archivo', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  --shadow-card: 0 1px 2px rgba(28, 30, 33, 0.04), 0 8px 24px rgba(28, 30, 33, 0.06);
+
+  color-scheme: light dark;
+}
+
+:root[data-theme='dark'] {
+  --bg: #17181b;
+  --surface: #1f2024;
+  --ink: #f2efe9;
+  --ink-soft: #d8d4cb;
+  --muted: #9c968a;
+  --line: #313236;
+  --line-strong: #3f4045;
+  --accent: #e87a52;
+  --accent-ink: #17181b;
+  --accent-soft: #3a2a24;
+  --good: #6fb387;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #17181b;
+    --surface: #1f2024;
+    --ink: #f2efe9;
+    --ink-soft: #d8d4cb;
+    --muted: #9c968a;
+    --line: #313236;
+    --line-strong: #3f4045;
+    --accent: #e87a52;
+    --accent-ink: #17181b;
+    --accent-soft: #3a2a24;
+    --good: #6fb387;
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: var(--display);
+  color: var(--ink);
+  font-weight: 600;
+  text-wrap: balance;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+code, .mono {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.mono-inline {
+  font-family: var(--mono);
+  font-size: 0.9em;
+  background: var(--accent-soft);
+  color: var(--ink);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
